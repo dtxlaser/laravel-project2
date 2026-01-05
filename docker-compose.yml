@@ -1,11 +1,15 @@
 services:
   app:
     build: .
+    volumes:
+      - ./src:/var/www
+      - vendor_data:/var/www/vendor
     networks:
       - project2_net
       - shared_db_net
-    volumes:
-      - ./src:/var/www:cached
+
+volumes:
+  vendor_data:
 
   nginx:
     image: nginx:alpine
@@ -24,3 +28,4 @@ networks:
     driver: bridge
   shared_db_net:
     external: true
+
