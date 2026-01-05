@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    networks:
+      - project2_net
+      - shared_db_net
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./src:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    expose:
+      - "80"
+    depends_on:
+      - app
+    networks:
+      - project2_net
+
+networks:
+  project2_net:
+    driver: bridge
+
+  shared_db_net:
+    external: true
