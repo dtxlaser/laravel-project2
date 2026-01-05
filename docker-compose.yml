@@ -1,16 +1,19 @@
 services:
+  # ----------------------------
+  # Laravel App
+  # ----------------------------
   app:
     build: .
     volumes:
-      - ./src:/var/www
-      - vendor_data:/var/www/vendor
+      - ./src:/var/www         # Mount your project source code
+      - vendor_data:/var/www/vendor  # Persistent vendor folder
     networks:
       - project2_net
       - shared_db_net
 
-volumes:
-  vendor_data:
-
+  # ----------------------------
+  # Nginx
+  # ----------------------------
   nginx:
     image: nginx:alpine
     volumes:
@@ -23,9 +26,17 @@ volumes:
     networks:
       - project2_net
 
+# ----------------------------
+# Volumes
+# ----------------------------
+volumes:
+  vendor_data:
+
+# ----------------------------
+# Networks
+# ----------------------------
 networks:
   project2_net:
     driver: bridge
   shared_db_net:
     external: true
-
